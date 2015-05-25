@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container" ng-controller="PhotosController">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div class="form-group">
+                <label for="select-shape" class="control-label">Shape:</label>
+                <select name="select-shape" id="select-shape" class="form-control" ng-model="shape">
+                    <option value="img-rounded">Rounded</option>
+                    <option value="img-circle">Circle</option>
+                    <option value="img-thumbnail">Thumbnail</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div ng-repeat="photo in photos">
+            <photo url="photo.url" title="photo.name" shape="shape"/>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script src="scope.js"></script>
+<script type="text/ng-template" id="photo.html">
+    <div class="col-sm-4">
+        <h3>{{title}}</h3>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <img ng-src="{{url}}" alt="" class="img-responsive" ng-class="shape"/>
+            </div>
+        </div>
+    </div>
+</script>
+</body>
+</html>
