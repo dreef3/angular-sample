@@ -1,8 +1,8 @@
 {
   "generator-gulp-angular": {
-    "version": "0.11.0",
+    "version": "0.12.0",
     "props": {
-      "angularVersion": "~1.3.4",
+      "angularVersion": "~1.4.0",
       "angularModules": [],
       "jQuery": {
         "key": "jquery2"
@@ -17,8 +17,7 @@
       },
       "ui": {
         "key": "bootstrap",
-        "module": null,
-        "name": "bootstrap"
+        "module": null
       },
       "bootstrapComponents": {
         "key": "ui-bootstrap",
@@ -29,9 +28,9 @@
         "extension": "css"
       },
       "jsPreprocessor": {
-        "key": "babel",
+        "key": "none",
         "extension": "js",
-        "srcExtension": "es6"
+        "srcExtension": "js"
       },
       "htmlPreprocessor": {
         "key": "none",

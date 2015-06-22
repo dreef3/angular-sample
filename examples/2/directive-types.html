@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
+</head>
+<body ng-app="directiveTypes">
+<div class="container">
+<my-directive directive-type="element"></my-directive>
+<div my-directive directive-type="attribute"></div>
+<div class="my-directive" directive-type="class"></div>
+<!-- directive: my-directive -->
+</div>
+<script>
+    angular.module('directiveTypes', [])
+            .directive('myDirective', function($compile) {
+                return {
+                    restrict: 'EACM',
+                    scope   : {
+                        directiveType: '@'
+                    },
+                    template: '<h3>I am applied to {{directiveType}}</h3>',
+                    link    : function(scope, el) {
+                        var node = el[0];
+                        if (node.nodeType === Node.COMMENT_NODE) {
+                            scope.directiveType = 'comment';
+                            var div = document.createElement('div');
+                            div.innerHTML = node.innerHTML;
+                            node.parentNode.replaceChild(div, node);
+                            $compile(div)(scope);
+                        }
+                    }
+                }
+            });
+</script>
+</body>
+</html>

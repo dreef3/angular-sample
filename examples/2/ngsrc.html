@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body ng-app="foo" ng-controller="MainController as ctrl">
+<img ng-src="{{ctrl.user.profilePicture}}"/>
+<button ng-click="ctrl.onClick(ctrl.user.profilePicture)">Click me!</button>
+<a ng-href="{{ctrl.user.profileUrl}}"></a>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script>
+    angular.module('foo', []).controller('MainController', function($scope) {
+        this.onClick = function(picture) {
+            alert('Hi!');
+        };
+        this.user = {
+            profilePicture: 'assets/1.jpg'
+        }
+    })
+</script>
+</body>
+</html>

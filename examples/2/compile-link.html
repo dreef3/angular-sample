@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body ng-app="compileLink">
+<level-one>
+    <level-two>
+        <level-three>
+            Hello {{name}}!
+        </level-three>
+    </level-two>
+</level-one>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script>
+    var app = angular.module('compileLink', []);
+    app.run(function($rootScope) {
+        $rootScope.name = 'there';
+    });
+    function createDirective(name){
+        return function(){
+            return {
+                restrict: 'E',
+                compile: function(tElem, tAttrs){
+                    console.log(name + ': compile');
+                    return {
+                        pre: function(scope, iElem, iAttrs){
+                            console.log(name + ': pre link');
+                        },
+                        post: function(scope, iElem, iAttrs){
+                            console.log(name + ': post link');
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    app.directive('levelOne', createDirective('levelOne'));
+    app.directive('levelTwo', createDirective('levelTwo'));
+    app.directive('levelThree', createDirective('levelThree'));
+</script>
+</body>
+</html>

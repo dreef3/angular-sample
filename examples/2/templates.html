@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body ng-app="templates">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div ng-include=" 'script.html' "></div>
+        </div>
+        <div class="col-sm-12">
+            <div ng-include=" 'directly.html' "></div>
+        </div>
+        <div class="col-sm-12" inline-template></div>
+        <div class="col-sm-12" template-url></div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script type="text/ng-template" id="script.html">
+    <h1>Hey out there!</h1>
+</script>
+<script>
+    angular.module('templates', []).run(function($templateCache) {
+        $templateCache.put('directly.html', '<h2>I am from $templateCache!</h2>')
+    });
+</script>
+<script src="templates.js"></script>
+</body>
+</html>
