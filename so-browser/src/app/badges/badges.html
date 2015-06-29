@@ -1,0 +1,24 @@
+<div class="row col-sm-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">Badges</div>
+        <table class="table">
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Award #</th>
+            </tr>
+            <tr ng-repeat="badge in vm.badges">
+                <td>{{badge.rank}}</td>
+                <td>{{badge.name}}</td>
+                <td>{{badge.description}}</td>
+                <td>{{badge.award_count}}</td>
+            </tr>
+            <tr ng-show="!vm.badges || !vm.badges.length">
+                <td colspan="4">
+                    <p class="text-center">No badges found</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
