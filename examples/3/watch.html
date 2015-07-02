@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body ng-app="watch" ng-controller="MainController">
+<div class="form-group">
+    <label>Name:</label>
+    <input ng-model="person.name">
+    <label>Email:</label>
+    <input ng-model="person.email">
+
+    <p>{{ collection | json}}</p>
+    <button ng-click="addThree()">Add Three</button>
+    <button ng-click="changeSmth()">Change Something</button>
+    <p>{{ objCollection | json}}</p>
+    <button ng-click="addThreeObj()">Add Three</button>
+    <button ng-click="changeSmthObj()">Change Something</button>
+</div>
+<label></label>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script>
+    function MainController($scope) {
+        $scope.collection = [];
+        $scope.addThree = function() {
+            $scope.collection.push({one: 1}, {two: 2}, {three: 3});
+        };
+        $scope.changeSmth = function() {
+            if ($scope.collection.length) {
+                $scope.collection[0].one = 2;
+            }
+        };
+        $scope.objCollection = {one: 1, two: 2};
+        $scope.addThreeObj = function() {
+            angular.extend($scope.objCollection, {three: 3, four: 4, five: 5});
+        };
+        $scope.changeSmthObj = function() {
+            $scope.objCollection.one = 2;
+        };
+        $scope.person = {
+            name : 'John',
+            email: 'john@example.com'
+        };
+
+        $scope.$watch('person.name', function() {
+            console.log('[Watch: person.name]', arguments);
+        });
+        $scope.$watch(function() {
+            return $scope.person.name;
+        }, function() {
+            console.log('[Watch: person.name (fn)]', arguments);
+        });
+        $scope.$watch('person', function() {
+            console.log('[Watch: person]', arguments);
+        });
+        $scope.$watch('person', function() {
+            console.log('[Watch: person]', arguments);
+        }, true);
+        $scope.$watchCollection('collection', function() {
+            console.log('[watchCollection: collection]', arguments);
+        });
+        $scope.$watchCollection('objCollection', function() {
+            console.log('[watchCollection: objCollection]', arguments);
+        });
+    }
+
+    angular.module('watch', [])
+            .controller('MainController', MainController);
+</script>
+</body>
+</html>

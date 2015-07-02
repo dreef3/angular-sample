@@ -1,0 +1,17 @@
+{
+  "global": {
+    "parseVersion": "1.4.2"
+  },
+  "applications": {
+    "_default": {
+      "link": "so-browser"
+    },
+    "deployment": {
+      "link": "so-browser"
+    },
+    "so-browser": {
+      "applicationId": "e8SyY2mjQShJnlgPjcgWymRWp3L42xBvMRfhxiSx",
+      "masterKey": "RoEo3vkJ4Ttfv6Hqxk89MUpijTBKDOJIxmrPiI1g"
+    }
+  }
+}

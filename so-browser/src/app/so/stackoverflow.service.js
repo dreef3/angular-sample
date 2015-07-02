@@ -8,7 +8,7 @@ angular.module('soBrowser').factory('StackOverflow', function($q, $timeout, $res
             SE.init({
                 clientId  : 5102,
                 key       : 'z*seCcFGW36Ap0aayFZ2HA((',
-                channelUrl: 'http://localhost:3000/blank',
+                channelUrl: 'http://so-browser.parseapp.com/blank',
                 complete  : function() {
                     $timeout.cancel(errorTimeout);
                     resolve();
@@ -37,18 +37,27 @@ angular.module('soBrowser').factory('StackOverflow', function($q, $timeout, $res
         },
 
         createResource: function() {
+            function unwrapTransformer(data) {
+                data = angular.fromJson(data);
+                return data && data.items ? data.items : data;
+            }
+
             var HOST = 'https://api.stackexchange.com/2.2';
             var defaults = {/*withCredentials: true, */cache: true};
             return $resource(HOST, {
                 accessToken: this._accessToken,
                 site: 'stackoverflow'
             }, {
-                badges: angular.extend({method: 'GET', isArray: true, url: HOST + '/badges'}, defaults)
+                badges: angular.extend({
+                    method: 'GET', isArray: true, url: HOST + '/badges', transformResponse: unwrapTransformer
+                }, defaults)
             });
         },
 
         badges: function() {
-            return this.getResource().badges();
+            return this.getResource().badges().$promise.then(function(response) {
+                return response.items;
+            });
         }
     };
 

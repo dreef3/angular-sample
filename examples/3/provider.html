@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body ng-app="provider" ng-controller="MainController">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script>
+    angular.module('services', [])
+            .constant('apiToken', '12345-supersecrettoken')
+            .provider('unicornLauncher', function UnicornLauncherProvider() {
+                function UnicornLauncher(apiToken, tinfoilShielding) {
+                    this.apiToken = apiToken;
+                    this.tinfoilSchielding = tinfoilShielding;
+                }
+
+                var useTinfoilShielding = false;
+                this.useTinfoilShielding = function(value) {
+                    useTinfoilShielding = !!value;
+                };
+
+                this.$get = [
+                    'apiToken', function unicornLauncherFactory(apiToken) {
+                        return new UnicornLauncher(apiToken, useTinfoilShielding);
+                    }
+                ];
+            })
+            .config([
+                "unicornLauncherProvider", function(unicornLauncherProvider) {
+                    unicornLauncherProvider.useTinfoilShielding(true);
+                }
+            ])
+            .controller('MainController', function MainController(UnicornLauncher) {
+                console.log(UnicornLauncher);
+            });
+</script>
+</body>
+</html>

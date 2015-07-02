@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body ng-app="events" ng-controller="MainController">
+<div class="container">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>Contacts</h3>
+            </div>
+            <table class="table">
+                <tbody>
+                <tr ng-repeat="contact in contacts">
+                    <td>
+                        {{contact.name}}
+                    </td>
+                    <td>
+                        <button class="btn btn-info" ng-click="details(contact)"><span
+                                class="glyphicon glyphicon-user"></span></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="panel panel-default" ng-controller="ChildController">
+            <div class="panel-heading">
+                <h3>Details</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" ng-model="contact.name">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input class="form-control" ng-model="contact.email">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script>
+    function MainController($scope, Contacts) {
+        $scope.contacts = Contacts.getAll();
+        $scope.details = function(contact) {
+            $scope.$broadcast('contact:details', contact);
+        }
+    }
+
+    function ChildController($scope) {
+        $scope.contact = {};
+        $scope.$on('contact:details', function(event, contact) {
+            $scope.contact = contact;
+        });
+    }
+
+    function ContactsFactory($timeout, $rootScope) {
+        return {
+            getAll: function() {
+                return [
+                    {name: 'John', email: 'john@example.com'},
+                    {name: 'Arnold', email: 'arnold@example.com'}
+                ];
+            }
+        }
+    }
+
+    angular.module('events', [])
+            .controller('MainController', MainController)
+            .controller('ChildController', ChildController)
+            .factory('Contacts', ContactsFactory)
+            .run(function($rootScope) {
+                $rootScope.logs = [];
+            });
+</script>
+</body>
+</html>

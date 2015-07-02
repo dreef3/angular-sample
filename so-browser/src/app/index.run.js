@@ -10,7 +10,9 @@
 
         $log.debug('runBlock end');
 
-        StackOverflow.badges().$promise.then(function() {
+        StackOverflow.login().then(function() {
+            return StackOverflow.badges().$promise
+        }).then(function() {
             console.log(arguments);
         });
     }
